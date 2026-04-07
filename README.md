@@ -21,15 +21,8 @@ The Version 1 architecture is engineered to extract features at multiple spatial
 ## 4. Interpretability (Saliency Maps)
 To prevent the model from acting as a "black box," the pipeline implements gradient-based Saliency Mapping. By computing the derivative of the predicted class score with respect to the input image tensor (`input_tensor.grad`), the system generates a heat map highlighting the exact pixels (e.g., leaf lesions or rust spots) that drove the classification decision.
 
-## 5. Results and Critical Evaluation
+## 5. Results
 The baseline model achieves strong top-line accuracy but exhibits specific failure modes when subjected to Confusion Matrix analysis.
 
 * **Inter-Species Success:** The model demonstrates near-perfect accuracy in distinguishing between crop species (e.g., it does not confuse Corn with Wheat).
 * **Intra-Species Limitations:** The network struggles to differentiate between morphologically similar diseases within the same species. Most notably, it exhibits confusion between *Tomato Early Blight* vs. *Tomato Late Blight*, and *Potato Early Blight* vs. *Potato Late Blight*.
-
-## 6. Limitations and Version 2 Roadmap
-Analysis of the Version 1 architecture reveals three specific bottlenecks that cause the intra-species confusion. The ongoing development of Version 2 will address these directly:
-
-1. **Information Loss via Pooling:** The aggressive `AdaptiveAvgPool2d(4, 4)` forces high-resolution branches to match low-resolution branches, destroying the fine-grained texture data required to differentiate early vs. late blight. *V2 will implement a shared hierarchical backbone before branching.*
-2. **Naive Concatenation:** The dense layer currently treats all branch features equally. *V2 will introduce a learned Gated Fusion mechanism to dynamically weigh the importance of the $3 \times 3$ vs $7 \times 7$ branches based on the input.*
-3. **Background Noise:** Standard convolutions process soil and leaf equally. *V2 will integrate a Convolutional Block Attention Module (CBAM) to spatially mask out the background and strictly focus on the pathological lesions.*
