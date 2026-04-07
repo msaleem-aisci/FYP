@@ -1,7 +1,5 @@
 # PhytoNet: Multi-Scale CNN for Crop Disease Classification (Version 1 Baseline)
 
-**Research Team:** BlueMind
-
 ## 1. Abstract
 PhytoNet is a custom convolutional neural network designed from scratch to classify agricultural pathology across multiple crop species. The baseline architecture moves away from standard pre-trained transfer learning (e.g., ResNet) in favor of a custom multi-branch topology intended to capture varying receptive fields. It successfully classifies 13 distinct healthy and diseased states across four primary crops (Corn, Potato, Tomato, and Wheat), incorporating gradient-based explainability to provide visual justifications for its predictions.
 
